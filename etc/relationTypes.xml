@@ -1,25 +1,95 @@
 <relations>
     <!-- Ric-o -->
     <group type="family">
-        <type  vocabularySource="RiC-O" vocabularySourceUri="https://www.ica.org/standards/RiC/ontology">rico:hasFamilyAssociationWith</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasChild">rico:hasChild</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#isChildOf">rico:isChildOf</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasDescendant">rico:hasDescendant</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasAncestor">rico:hasAncestor</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadSpouse">rico:hasOrHadSpouse</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasSibling">rico:hasSibling</type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasChild">
+            <label>rico:hasChild</label>
+            <roles>
+                <role>fille</role>
+                <role>fils</role>
+            </roles>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#isChildOf">
+            <label>rico:isChildOf</label>
+            <roles>
+                <role>père</role>
+                <role>mère</role>
+            </roles>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadSpouse">
+            <label>rico:hasOrHadSpouse</label>
+            <roles>
+                <role>époux</role>
+                <role>épouse</role>
+            </roles>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasSibling">
+            <label>rico:hasSibling</label>
+            <roles>
+                <role>frère</role>
+                <role>sœur</role>
+                <role>demi-frère</role>
+                <role>demi-sœur</role>
+            </roles>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasDescendant">
+            <label>rico:hasDescendant</label>
+            <roles>
+                <role>petit-fils</role>
+                <role>petite-fille</role>
+                <role>arrière-petit-fils</role>
+                <role>arrière-petite-fille</role>
+            </roles>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasAncestor">
+            <label>rico:hasAncestor</label>
+            <roles>
+                <role>grand-père</role>
+                <role>grand-mère</role>
+                <role>arrière-grand-père</role>
+                <role>arrière-grand-mère</role>
+            </roles>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceUri="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasFamilyAssociationWith">
+            <label>rico:hasFamilyAssociationWith</label>
+            <roles>
+                <role>oncle</role>
+                <role>tante</role>
+                <role>cousin</role>
+                <role>cousine</role>
+                <role>beau-père</role>
+                <role>belle-mère</role>
+                <role>beau-fils</role>
+                <role>belle-fille</role>
+                <role>bru</role>
+                <role>gendre</role>
+            </roles>
+        </type>
     </group>
     <group type="knowing">
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#knownBy">rico:knownBy</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#knows">rico:knows</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#knowsOf">rico:knowsOf</type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#knowsOf">
+            <label>rico:knowsOf</label>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#knownBy">
+            <label>rico:knownBy</label>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#knows">
+            <label>rico:knows</label>
+        </type>
     </group>
     <group type="teaching">
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadTeacher">rico:hasOrHadTeacher</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadStudent">rico:hasOrHadStudent</type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadTeacher">
+            <label>rico:hasOrHadTeacher</label>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadStudent">
+            <label>rico:hasOrHadStudent</label>
+        </type>
     </group>
     <group type="other">
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadCorrespondent">rico:hasOrHadCorrespondent</type>
-        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#isOrWasOwnerOf">rico:isOrWasOwnerOf</type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#hasOrHadCorrespondent">
+            <label>rico:hasOrHadCorrespondent</label>
+        </type>
+        <type vocabularySource="RiC-O" vocabularySourceURI="https://www.ica.org/standards/RiC/ontology" valueURI="https://www.ica.org/standards/RiC/ontology#isOrWasOwnerOf">
+            <label>rico:isOrWasOwnerOf</label>
+        </type>
     </group>
 </relations>

@@ -2969,7 +2969,7 @@
             <xf:action ev:event="DOMActivate">
               <xf:insert context="eac:description" nodeset="*" at="last()" position="after" origin="instance('eacBiogHist')/eac:biogHist"/>
             </xf:action>
-            <xf:delete nodeset="eac:eac:description/eac:biogHist/node()" ev:event="DOMActivate"/>
+            <xf:delete nodeset="eac:description/eac:biogHist/node()" ev:event="DOMActivate"/>
           </xf:trigger>
           <xf:trigger ref="eac:cpfDescription[eac:description[not(eac:biogHist)]]">
             <xf:label><xf:output value="concat('+ ', instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-biogHist']/tei:div[@type='fullName'])"/></xf:label>
@@ -3005,7 +3005,7 @@
                 <xf:insert context="eac:chronList[last()]" nodeset="*" origin="instance('eacChronItem')/eac:chronItem"/>
               </xf:action>
               <xf:action ev:event="DOMActivate">
-                <xf:delete nodeset="eac:chronList/eac:chronItem[last()]/*"/>
+                <xf:delete nodeset="eac:chronList/eac:chronItem[last()]/*[name(.)!='event']"/>
                 <!--@todo generate-id() with BaseX-->
                 <xf:dispatch name="getid" targetid="entity"/>
               </xf:action>

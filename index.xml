@@ -131,8 +131,8 @@
         <control xmlns="https://archivists.org/ns/eac/v2">
           <sources>
             <source id="">
-              <reference id="" href=""/>
-              <citedRange id=""/>
+              <reference href=""/>
+              <citedRange/>
               <descriptiveNote>
                 <p></p>
               </descriptiveNote>
@@ -387,14 +387,24 @@
         </xf:action>
       </xf:submission>
 
-      <xf:action ev:event="getid" while="//@id[.=''][parent::*[self::eac:source or self::eac:reference or self::eac:citedRange or self::eac:chronItem or self::eac:relationType]]">
+      <!--<xf:action ev:event="getid" while="//@id[.=''][parent::*[self::eac:source or self::eac:reference or self::eac:citedRange or self::eac:chronItem or self::eac:relationType]]">
         <xf:load>
           <xf:resource value="concat(
           'javascript:generateid(''',
           name(//@id[.=''][parent::*[self::eac:source or self::eac:reference or self::eac:citedRange or self::eac:chronItem or self::eac:relationType][not(ancestor::*[self::eac:source or self::eac:reference or self::eac:citedRange][@id=''] or preceding::*[self::eac:source or self::eac:reference or self::eac:citedRange or self::eac:chronItem][@id=''])]]/parent::*)
           ,''')')"/>
         </xf:load>
+      </xf:action>-->
+
+      <xf:action ev:event="getid" while="//@id[.=''][parent::*[self::eac:source or self::eac:chronItem or self::eac:relationType]]">
+        <xf:load>
+          <xf:resource value="concat(
+          'javascript:generateid(''',
+          name(//@id[.=''][parent::*[self::eac:source or self::eac:chronItem or self::eac:relationType][not(ancestor::*[self::eac:source][@id=''] or preceding::*[self::eac:source or self::eac:chronItem][@id=''])]]/parent::*)
+          ,''')')"/>
+        </xf:load>
       </xf:action>
+
       <xf:action ev:event="callbackevent">
         <xf:setvalue ref="//@id[.=''][parent::*[self::eac:source or self::eac:reference or self::eac:citedRange or self::eac:chronItem or self::eac:relationType][not(ancestor::*[self::eac:source or self::eac:reference or self::eac:citedRange][@id=''] or preceding::*[self::eac:source or self::eac:reference or self::eac:citedRange or self::eac:chronItem or self::eac:relationType][@id=''])]]" value="event('response')"/>
         <xf:setvalue if="//eac:targetRole[@target='']" ref="//@target[.=''][parent::eac:targetRole]" value="concat('#', event('response'))"/>
@@ -426,10 +436,6 @@
       <h1><xf:output value="if(eac:control/eac:recordId[.!=''],
       concat(eac:control/eac:recordId, ' | ', eac:cpfDescription/eac:identity/eac:nameEntry[@preferredForm = 'true'][1]/eac:part[@localType='full']),
       eac:cpfDescription/eac:identity/eac:nameEntry[@preferredForm = 'true'][1]/eac:part[@localType='full'])"/></h1>
-      <xf:trigger>
-        <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-control']/tei:div[@type='fullName']"/>
-        <xf:toggle case="controlPanel" ev:event="DOMActivate" />
-      </xf:trigger>
       <xf:trigger>
         <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-sources']/tei:div[@type='fullName']"/>
         <xf:toggle case="sourcesPanel" ev:event="DOMActivate" />
@@ -466,7 +472,11 @@
         <xf:label>Commentaires</xf:label>
         <xf:toggle case="commentPanel" ev:event="DOMActivate" />
       </xf:trigger>
-      <xf:case id="controlPanel" selected="true">
+      <xf:trigger>
+        <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-control']/tei:div[@type='fullName']"/>
+        <xf:toggle case="controlPanel" ev:event="DOMActivate" />
+      </xf:trigger>
+      <xf:case id="controlPanel" selected="false">
         <xf:group ref="eac:control">
           <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-control']/tei:div[@type='fullName']"/>
           <xf:hint><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-control']/tei:div[@type='summary']"/></xf:hint>
@@ -720,11 +730,6 @@
                 <xf:delete nodeset="eac:source[last()]/eac:descriptiveNote"/>
                 <xf:delete nodeset="eac:source[last()]/eac:citedRange"/>
                 <xf:delete nodeset="eac:source[last()]/eac:reference/@href"/>
-                <!--@todo generate-id() with basex-->
-                <!--<xf:setvalue ref="eac:source[@xml:id='']/@xml:id" value="concat('source_', count(current()/eac:source))"/>-->
-                <!--<xf:load>
-                      <xf:resource value="concat('javascript:generateid(''','source',''')')"/>
-                    </xf:load>-->
                 <xf:dispatch name="getid" targetid="entity" ev:event="DOMActivate"/>
               </xf:action>
             </xf:trigger>
@@ -757,7 +762,7 @@
                 <xf:action ev:event="DOMActivate">
                   <xf:delete nodeset="eac:reference[last()]/@href"/>
                 </xf:action>
-                <xf:dispatch name="getid" targetid="entity" ev:event="DOMActivate"/>
+                <!--<xf:dispatch name="getid" targetid="entity" ev:event="DOMActivate"/>-->
               </xf:trigger>
               <xf:trigger>
                 <xf:label><xf:output value="concat('+ ', instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-citedRange']/tei:div[@type='fullName'])" /></xf:label>
@@ -765,7 +770,7 @@
                   <xf:insert if="eac:citedRange" context="." nodeset="eac:citedRange" origin="instance('eacSources')/eac:sources/eac:source/eac:citedRange" at="last()" position="after"/>
                   <xf:insert if="not(eac:citedRange)" context="." nodeset="eac:reference" origin="instance('eacSources')/eac:sources/eac:source/eac:citedRange" at="last()" position="after"/>
                 </xf:action>
-                <xf:dispatch name="getid" targetid="entity" ev:event="DOMActivate"/>
+                <!--<xf:dispatch name="getid" targetid="entity" ev:event="DOMActivate"/>-->
               </xf:trigger>
               <xf:trigger ref="self::eac:source[not(eac:descriptiveNote)]">
                 <xf:label><xf:output value="concat('+ ', instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-descriptiveNote']/tei:div[@type='fullName'])" /></xf:label>
@@ -876,7 +881,7 @@
           </xf:group>
         </xf:group>
       </xf:case>
-      <xf:case id="identityPanel" selected="false">
+      <xf:case id="identityPanel" selected="true">
         <xf:group ref="eac:cpfDescription/eac:identity">
           <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-identity']/tei:div[@type='fullName']" class="{if(is-valid(.), 'valid', 'invalid')}"/>
           <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-identity']/tei:div[@type='description']"/></xf:help>
@@ -5672,7 +5677,7 @@
           </xf:repeat>
         </xf:group>
       </xf:case>
-      <xf:case id="commentPanel" selected=".">
+      <xf:case id="commentPanel" selected="false">
         <xf:group ref="comment()">
           <xf:textarea ref=".">
             <xf:label>Commentaire</xf:label>

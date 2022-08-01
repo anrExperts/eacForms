@@ -1,0 +1,6 @@
+<entityTypes xmlns="">
+    <type>Expert (tableau)</type>
+    <type>Expert (non inscrit)</type>
+    <type>Maçon</type>
+    <type>Autre (person)</type>
+</entityTypes>

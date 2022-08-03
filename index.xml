@@ -250,7 +250,13 @@
             <head/>
             <abstract/>
             <!-- one or more -->
-            <chronList/>
+            <chronList>
+              <chronItem id="" sourceReference="">
+                <date certainty="" standardDate="" notBefore="" notAfter="" sourceReference=""/>
+                <event localType=""/>
+                <place/>
+              </chronItem>
+            </chronList>
             <list/>
             <p/>
           </biogHist>
@@ -284,6 +290,8 @@
               <targetEntity targetType="">
                 <part localType=""/>
               </targetEntity>
+              <relationType id="" valueURI="" vocabularySource="" vocabularySourceURI=""/>
+              <targetRole target=""/>
             </relation>
           </relations>
         </cpfDescription>
@@ -3620,14 +3628,17 @@
             <xf:action ev:event="DOMActivate">
               <xf:insert context="eac:description" nodeset="*" at="last()" position="after" origin="instance('eacBiogHist')/eac:biogHist"/>
             </xf:action>
-            <xf:delete nodeset="eac:description/eac:biogHist/node()" ev:event="DOMActivate"/>
+            <!--<xf:delete nodeset="eac:description/eac:biogHist/node()" ev:event="DOMActivate"/>-->
+            <xf:delete nodeset="eac:description/eac:biogHist/eac:head" ev:event="DOMActivate"/>
+            <xf:delete nodeset="eac:description/eac:biogHist/eac:abstract" ev:event="DOMActivate"/>
           </xf:trigger>
           <xf:trigger ref="eac:cpfDescription[eac:description[not(eac:biogHist)]]">
             <xf:label><xf:output value="concat('+ ', instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-biogHist']/tei:div[@type='fullName'])"/></xf:label>
             <xf:action ev:event="DOMActivate">
               <xf:insert context="eac:description" nodeset="*" at="last()" position="after" origin="instance('eacBiogHist')/eac:biogHist"/>
             </xf:action>
-            <xf:delete nodeset="eac:description/eac:biogHist/node()" ev:event="DOMActivate"/>
+            <xf:delete nodeset="eac:description/eac:biogHist/eac:head" ev:event="DOMActivate"/>
+            <xf:delete nodeset="eac:description/eac:biogHist/eac:abstract" ev:event="DOMActivate"/>
           </xf:trigger>
         </xf:group>
         <xf:group ref="eac:cpfDescription/eac:description/eac:biogHist">
@@ -3746,6 +3757,17 @@
                   </xf:action>
                   <xf:delete ev:event="DOMActivate" nodeset="eac:chronItemSet/eac:place"/>
                 </xf:trigger>
+              </xf:group>
+              <xf:group ref=".">
+                <xf:select ref="@sourceReference" appearance="full">
+                  <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
+                  <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
+                  <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
+                    <!--@todo Q° multiple references inside one source !-->
+                    <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
+                    <xf:value value="concat('#', @id)"/>
+                  </xf:itemset>
+                </xf:select>
               </xf:group>
               <xf:group ref="eac:date">
                 <xf:label><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-date']/tei:div[@type='fullName']" /></xf:label>
@@ -4597,7 +4619,7 @@
                   </xf:repeat>
                 </xf:group>
               </xf:group>
-              <xf:group ref="eac:chronItemSet">
+              <!--<xf:group ref="eac:chronItemSet">
                 <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-chronItemSet']/tei:div[@type='fullName']"/>
                 <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-chronItemSet']/tei:div[@type='description']"/></xf:help>
                 <xf:group class="trigger">
@@ -4741,7 +4763,7 @@
                         <xf:delete nodeset="." ev:event="DOMActivate"/>
                       </xf:trigger>
                       <xf:trigger>
-                        <!--↺-->
+                        &lt;!&ndash;↺&ndash;&gt;
                         <xf:label><xf:output value="concat('⇆', instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-dateRange']/tei:div[@type='fullName'])" /></xf:label>
                         <xf:action ev:event="DOMActivate">
                           <xf:insert context="parent::eac:place" nodeset="eac:date" position="after" origin="instance('eacDates')/eac:dateRange"/>
@@ -4792,7 +4814,7 @@
                         <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
                         <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
                         <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
-                          <!--@todo Q° multiple references inside one source !-->
+                          &lt;!&ndash;@todo Q° multiple references inside one source !&ndash;&gt;
                           <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
                           <xf:value value="concat('#', @id)"/>
                         </xf:itemset>
@@ -4859,7 +4881,7 @@
                           <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
                           <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
                           <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
-                            <!--@todo Q° multiple references inside one source !-->
+                            &lt;!&ndash;@todo Q° multiple references inside one source !&ndash;&gt;
                             <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
                             <xf:value value="concat('#', @id)"/>
                           </xf:itemset>
@@ -4902,7 +4924,7 @@
                           <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
                           <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
                           <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
-                            <!--@todo Q° multiple references inside one source !-->
+                            &lt;!&ndash;@todo Q° multiple references inside one source !&ndash;&gt;
                             <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
                             <xf:value value="concat('#', @id)"/>
                           </xf:itemset>
@@ -4989,7 +5011,7 @@
                           <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
                           <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
                           <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
-                            <!--@todo Q° multiple references inside one source !-->
+                            &lt;!&ndash;@todo Q° multiple references inside one source !&ndash;&gt;
                             <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
                             <xf:value value="concat('#', @id)"/>
                           </xf:itemset>
@@ -5032,7 +5054,7 @@
                               <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
                               <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
                               <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
-                                <!--@todo Q° multiple references inside one source !-->
+                                &lt;!&ndash;@todo Q° multiple references inside one source !&ndash;&gt;
                                 <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
                                 <xf:value value="concat('#', @id)"/>
                               </xf:itemset>
@@ -5075,7 +5097,7 @@
                               <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
                               <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
                               <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
-                                <!--@todo Q° multiple references inside one source !-->
+                                &lt;!&ndash;@todo Q° multiple references inside one source !&ndash;&gt;
                                 <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
                                 <xf:value value="concat('#', @id)"/>
                               </xf:itemset>
@@ -5111,18 +5133,7 @@
                     </xf:repeat>
                   </xf:group>
                 </xf:group>
-              </xf:group>
-              <xf:group ref=".">
-                <xf:select ref="@sourceReference" appearance="full">
-                  <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='fullName']"/>
-                  <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='attributes']/tei:div[@xml:id='attr-sourceReference']/tei:div[@type='description']"/></xf:help>
-                  <xf:itemset ref="instance('eacInstance')/eac:control/eac:sources/eac:source[@id!='']">
-                    <!--@todo Q° multiple references inside one source !-->
-                    <xf:label><xf:output value="string-join(*, ', ')" /></xf:label>
-                    <xf:value value="concat('#', @id)"/>
-                  </xf:itemset>
-                </xf:select>
-              </xf:group>
+              </xf:group>-->
             </xf:repeat>
           </xf:repeat>
         </xf:group>
@@ -5618,14 +5629,22 @@
                 <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-relationType']/tei:div[@type='fullName']"/>
                 <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-relationType']/tei:div[@type='description']"/></xf:help>
                 <xf:itemset ref="instance('relationTypes')/group/type">
-                  <xf:label ref="."/>
-                  <xf:value ref="."/>
+                  <xf:label ref="label"/>
+                  <xf:value ref="label"/>
                 </xf:itemset>
                 <xf:setvalue ref="@valueURI" value="instance('relationTypes')//type[.=current()]/@valueURI" ev:event="xforms-value-changed"/>
                 <xf:setvalue ref="@vocabularySource" value="instance('relationTypes')//type[.=current()]/@vocabularySource" ev:event="xforms-value-changed"/>
                 <xf:setvalue ref="@vocabularySourceURI" value="instance('relationTypes')//type[.=current()]/@vocabularySourceURI" ev:event="xforms-value-changed"/>
               </xf:select1>
-              <xf:input ref="following-sibling::*[1][self::eac:targetRole]">
+              <xf:select1 ref="following-sibling::*[1][self::eac:targetRole[preceding-sibling::*[1][self::eac:relationType] = instance('relationTypes')/group/type[roles]/label]]">
+                <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-targetRole']/tei:div[@type='fullName']"/>
+                <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-relationType']/tei:div[@type='description']"/></xf:help>
+                <xf:itemset ref="instance('relationTypes')/group/type[label = current()/preceding-sibling::*[1][self::eac:relationType]]/roles/role">
+                  <xf:label ref="."/>
+                  <xf:value ref="."/>
+                </xf:itemset>
+              </xf:select1>
+              <xf:input ref="following-sibling::*[1][self::eac:targetRole[preceding-sibling::*[1][self::eac:relationType] = instance('relationTypes')/group/type[not(roles)]/label or preceding-sibling::*[1][self::eac:relationType] = '']]">
                 <xf:label ref="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-targetRole']/tei:div[@type='fullName']"/>
                 <xf:help><xf:output value="instance('documentation')/tei:text/tei:body/tei:div[@type='elements']/tei:div[@xml:id='elem-targetRole']/tei:div[@type='description']"/></xf:help>
               </xf:input>
